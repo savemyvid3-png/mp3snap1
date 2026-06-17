@@ -1,5 +1,17 @@
 {
   "name": "neurotube",
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    ...
+  }
+}
+{
+  "name": "neurotube",
   "productName": "Neurotube",
   "private": true,
   "version": "1.0.0",
