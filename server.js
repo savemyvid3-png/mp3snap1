@@ -38,6 +38,15 @@ const isValidYouTubeUrl = (url) => {
 };
 
 // Helper to run yt-dlp and get JSON output
+const args = [
+  url,
+  '--dump-single-json',
+  '--no-check-certificates',
+  '--no-warnings',
+  '--no-playlist',
+  '--flat-playlist',
+  '--cookies', '/app/cookies.txt',  // ← أضف هذا
+];
 const getVideoInfo = async (url) => {
   return new Promise((resolve, reject) => {
     const args = [
@@ -138,6 +147,20 @@ app.get('/api/info', async (req, res) => {
 
     // Format duration
     const duration = info.duration 
+      const args = [
+  url,
+  '--extract-audio',
+  '--audio-format', 'mp3',
+  '--audio-quality', '0',
+  '--ffmpeg-location', ffmpegPath,
+  '--output', tempFile,
+  '--no-check-certificates',
+  '--no-warnings',
+  '--no-playlist',
+  '--concurrent-fragments', '4',
+  '--retries', '3',
+  '--cookies', '/app/cookies.txt',  // ← أضف هذا
+];
       ? new Date(info.duration * 1000).toISOString().substr(11, 8).replace(/^00:/, '')
       : '0:00';
 
@@ -174,6 +197,21 @@ app.get('/api/download', async (req, res) => {
   try {
     const { url, format, quality } = req.query;
 
+    const args = [
+  url,
+  '--format', formatString,
+  '--merge-output-format', 'mp4',
+  '--ffmpeg-location', ffmpegPath,
+  '--output', tempFile,
+  '--no-check-certificates',
+  '--no-warnings',
+  '--no-playlist',
+  '--concurrent-fragments', '4',
+  '--retries', '3',
+  '--embed-thumbnail',
+  '--add-metadata',
+  '--cookies', '/app/cookies.txt',  // ← أضف هذا
+];
     if (!url || !format) {
       return res.status(400).json({ error: 'URL and format parameters are required' });
     }
